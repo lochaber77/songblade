@@ -1,0 +1,25 @@
+[
+  { "nm": "Strike",         "cost": {"rhy": 6},           "fx": "Deal 6 damage.",
+    "effects": [{"type": "damage", "n": 6}] },
+
+  { "nm": "Flurry",         "cost": {"rhy": 5},           "fx": "Deal 3 damage.",
+    "effects": [{"type": "damage", "n": 3}] },
+
+  { "nm": "Mend",           "cost": {"har": 6},           "fx": "Heal 6.",
+    "effects": [{"type": "heal", "n": 6}] },
+
+  { "nm": "Bulwark",        "cost": {"key": 6},           "fx": "Gain 7 block.",
+    "effects": [{"type": "block", "n": 7}] },
+
+  { "nm": "Stolen Time",    "cost": {"key": 8},           "fx": "+20 seconds on the clock.",
+    "effects": [{"type": "time", "n": 20}] },
+
+  { "nm": "Lingering Wail", "cost": {"ech": 6},           "fx": "2 dmg every 2.5s, five times.",
+    "effects": [{"type": "dot", "tick": 2, "every": 2.5, "times": 5}] },
+
+  { "nm": "Shatterchord",   "cost": {"dis": 6},           "fx": "Deal 8. Feed the enemy 3.",
+    "effects": [{"type": "damage", "n": 8}, {"type": "feed", "n": 3}] },
+
+  { "nm": "Chorus Swell",   "cost": {"har": 4, "rhy": 3}, "fx": "Deal 2 and heal 2.",
+    "effects": [{"type": "damage", "n": 2}, {"type": "heal", "n": 2}] }
+]

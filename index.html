@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Songblade — Battle Prototype</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="top">
+    <div class="panel" id="enemyPanel">
+      <div style="display:flex; justify-content:space-between; align-items:baseline;">
+        <span id="ename">Enemy</span>
+        <span class="small" id="ehpTxt"></span>
+      </div>
+      <div class="barWrap" id="ehp"><div class="bar" style="width:100%"></div></div>
+      <div class="small">Enemy energy: <b id="een" style="color:#c9a7ff">0</b> · feeds on your spillover &amp; discards</div>
+      <div id="ecards"></div>
+      <div id="enrageBanner">⚠ ENRAGED — THE SONG HAS ENDED ⚠</div>
+    </div>
+    <div class="panel" id="clockPanel">
+      <div id="clock">0:00</div>
+      <div id="clockNote">spillover skips the clock</div>
+      <button id="debugBtn" title="Tuning panel">⚙</button>
+    </div>
+  </div>
+
+  <canvas id="board" width="560" height="520"></canvas>
+
+  <div id="hand"></div>
+
+  <div id="status">
+    <span class="small">You</span>
+    <div class="barWrap" id="php"><div class="bar" style="width:100%"></div></div>
+    <span class="small" id="phpTxt"></span>
+    <span id="blockTag"></span>
+  </div>
+  <div id="log">Loading…</div>
+
+  <div id="debugPanel" class="panel"></div>
+
+  <div id="overlay">
+    <h1 id="ovTitle"></h1>
+    <div id="ovSub" class="small"></div>
+    <button id="restartBtn">Play again</button>
+  </div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

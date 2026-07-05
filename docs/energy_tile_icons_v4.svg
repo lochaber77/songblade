@@ -1,0 +1,154 @@
+<svg viewBox="0 0 960 600" xmlns="http://www.w3.org/2000/svg" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <polygon id="hexO" points="70,0 35,60.6 -35,60.6 -70,0 -35,-60.6 35,-60.6"/>
+    <polygon id="hexI" points="60,0 30,52 -30,52 -60,0 -30,-52 30,-52"/>
+
+    <!-- ============ ICON GEOMETRY ============ -->
+    <g id="g-rhythm" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="-52,3 -32,3 -20,-34 -4,38 12,-18 22,3 52,3"/>
+    </g>
+
+    <g id="g-echo" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none">
+      <circle cx="-34" cy="0" r="7" fill="currentColor" stroke="none"/>
+      <path d="M -21.7,-15.8 A 20 20 0 0 1 -21.7,15.8"/>
+      <path d="M -10.6,-29.9 A 38 38 0 0 1 -10.6,29.9"/>
+      <path d="M 0.5,-44.1 A 56 56 0 0 1 0.5,44.1"/>
+    </g>
+
+    <!-- Treble clef, v3 sizing (kept) -->
+    <g id="g-key" transform="scale(0.8)" stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M -4,52 C -18,52 -18,38 -6,38 L 2,-38 C 2,-56 22,-56 22,-40 C 22,-26 6,-20 -6,-8 C -22,8 -22,26 -6,32 C 8,37 22,28 20,14 C 18,2 4,-2 -6,6"/>
+      <circle cx="-11" cy="45" r="5" fill="currentColor" stroke="none"/>
+    </g>
+
+    <!-- Harmony: v2 slanted beamed pair (reverted) -->
+    <g id="g-harmony" fill="currentColor" stroke="currentColor">
+      <ellipse cx="-24" cy="28" rx="13" ry="10" transform="rotate(-18 -24 28)"/>
+      <ellipse cx="24" cy="20" rx="13" ry="10" transform="rotate(-18 24 20)"/>
+      <line x1="-12" y1="25" x2="-12" y2="-28" stroke-width="7" stroke-linecap="round"/>
+      <line x1="36" y1="17" x2="36" y2="-36" stroke-width="7" stroke-linecap="round"/>
+      <polygon points="-15.5,-32 39.5,-40 39.5,-25 -15.5,-17"/>
+    </g>
+
+    <!-- Discord: v2 inverted note with offset snapped stem (reverted) -->
+    <g id="g-discord" fill="currentColor" stroke="currentColor">
+      <ellipse cx="-18" cy="-28" rx="13" ry="10" transform="rotate(-18 -18 -28)"/>
+      <line x1="-6" y1="-25" x2="-6" y2="0" stroke-width="7" stroke-linecap="round"/>
+      <line x1="9" y1="14" x2="9" y2="38" stroke-width="7" stroke-linecap="round"/>
+      <path d="M 9,38 C 25,32 27,18 19,8" fill="none" stroke-width="7" stroke-linecap="round"/>
+      <g stroke-width="5" stroke-linecap="round">
+        <line x1="-15" y1="6" x2="-24" y2="10"/>
+        <line x1="17" y1="3" x2="26" y2="-1"/>
+      </g>
+    </g>
+
+    <!-- ============ TILE GRADIENTS ============ -->
+    <linearGradient id="bev-rhythm" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E4635F"/><stop offset="1" stop-color="#701A1C"/>
+    </linearGradient>
+    <radialGradient id="face-rhythm" cx="0.42" cy="0.36" r="0.85">
+      <stop offset="0" stop-color="#D5504B"/><stop offset="1" stop-color="#96262A"/>
+    </radialGradient>
+
+    <linearGradient id="bev-echo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9779CB"/><stop offset="1" stop-color="#3E2A61"/>
+    </linearGradient>
+    <radialGradient id="face-echo" cx="0.42" cy="0.36" r="0.85">
+      <stop offset="0" stop-color="#7E60B5"/><stop offset="1" stop-color="#513B77"/>
+    </radialGradient>
+
+    <linearGradient id="bev-key" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#80ABC4"/><stop offset="1" stop-color="#28455A"/>
+    </linearGradient>
+    <radialGradient id="face-key" cx="0.42" cy="0.36" r="0.85">
+      <stop offset="0" stop-color="#5B8FAD"/><stop offset="1" stop-color="#3A5D75"/>
+    </radialGradient>
+
+    <linearGradient id="bev-harmony" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F0C561"/><stop offset="1" stop-color="#7F5D10"/>
+    </linearGradient>
+    <radialGradient id="face-harmony" cx="0.42" cy="0.36" r="0.85">
+      <stop offset="0" stop-color="#E0AC39"/><stop offset="1" stop-color="#A67B1B"/>
+    </radialGradient>
+
+    <linearGradient id="bev-discord" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8AB040"/><stop offset="1" stop-color="#33480C"/>
+    </linearGradient>
+    <radialGradient id="face-discord" cx="0.42" cy="0.36" r="0.85">
+      <stop offset="0" stop-color="#6E9329"/><stop offset="1" stop-color="#465F13"/>
+    </radialGradient>
+
+    <!-- ============ ENGRAVED TILES ============ -->
+    <g id="tile-rhythm">
+      <use href="#hexO" fill="url(#bev-rhythm)"/>
+      <use href="#hexI" fill="url(#face-rhythm)"/>
+      <g color="#3F0B0C" transform="translate(0,-2.5)"><use href="#g-rhythm"/></g>
+      <g color="#F2C3BE" transform="translate(0,2.5)" opacity="0.85"><use href="#g-rhythm"/></g>
+      <g color="#661214"><use href="#g-rhythm"/></g>
+    </g>
+    <g id="tile-echo">
+      <use href="#hexO" fill="url(#bev-echo)"/>
+      <use href="#hexI" fill="url(#face-echo)"/>
+      <g color="#1F1236" transform="translate(0,-2.5)"><use href="#g-echo"/></g>
+      <g color="#E2D3F6" transform="translate(0,2.5)" opacity="0.85"><use href="#g-echo"/></g>
+      <g color="#33224F"><use href="#g-echo"/></g>
+    </g>
+    <g id="tile-key">
+      <use href="#hexO" fill="url(#bev-key)"/>
+      <use href="#hexI" fill="url(#face-key)"/>
+      <g color="#101F2A" transform="translate(0,-2)"><use href="#g-key"/></g>
+      <g color="#D3E7F1" transform="translate(0,2)" opacity="0.85"><use href="#g-key"/></g>
+      <g color="#1F3646"><use href="#g-key"/></g>
+    </g>
+    <g id="tile-harmony">
+      <use href="#hexO" fill="url(#bev-harmony)"/>
+      <use href="#hexI" fill="url(#face-harmony)"/>
+      <g color="#3B2A05" transform="translate(0,-2.5)"><use href="#g-harmony"/></g>
+      <g color="#FFEFC2" transform="translate(0,2.5)" opacity="0.85"><use href="#g-harmony"/></g>
+      <g color="#5E4509"><use href="#g-harmony"/></g>
+    </g>
+    <g id="tile-discord">
+      <use href="#hexO" fill="url(#bev-discord)"/>
+      <use href="#hexI" fill="url(#face-discord)"/>
+      <g color="#151F04" transform="translate(0,-2.5)"><use href="#g-discord"/></g>
+      <g color="#E6F2C2" transform="translate(0,2.5)" opacity="0.85"><use href="#g-discord"/></g>
+      <g color="#25360A"><use href="#g-discord"/></g>
+    </g>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="600" rx="14" fill="#15151d"/>
+  <text x="480" y="44" text-anchor="middle" fill="#EDE7DC" font-size="24" letter-spacing="2">ENERGY TILES — ICON SKETCH v4 · ENGRAVED</text>
+
+  <g transform="translate(112,180)"><use href="#tile-rhythm"/></g>
+  <text x="112" y="280" text-anchor="middle" fill="#E8B7B4" font-size="19">RHYTHM</text>
+
+  <g transform="translate(296,180)"><use href="#tile-echo"/></g>
+  <text x="296" y="280" text-anchor="middle" fill="#CBBCE6" font-size="19">ECHO</text>
+
+  <g transform="translate(480,180)"><use href="#tile-key"/></g>
+  <text x="480" y="280" text-anchor="middle" fill="#B9D4E4" font-size="19">KEY</text>
+
+  <g transform="translate(664,180)"><use href="#tile-harmony"/></g>
+  <text x="664" y="280" text-anchor="middle" fill="#EDD9A8" font-size="19">HARMONY</text>
+
+  <g transform="translate(848,180)"><use href="#tile-discord"/></g>
+  <text x="848" y="280" text-anchor="middle" fill="#CDE3A0" font-size="19">DISCORD</text>
+
+  <text x="480" y="352" text-anchor="middle" fill="#EDE7DC" font-size="16" letter-spacing="1">32-PIXEL TEST</text>
+  <g transform="translate(300,404) scale(0.27)"><use href="#tile-rhythm"/></g>
+  <g transform="translate(390,404) scale(0.27)"><use href="#tile-echo"/></g>
+  <g transform="translate(480,404) scale(0.27)"><use href="#tile-key"/></g>
+  <g transform="translate(570,404) scale(0.27)"><use href="#tile-harmony"/></g>
+  <g transform="translate(660,404) scale(0.27)"><use href="#tile-discord"/></g>
+
+  <text x="480" y="472" text-anchor="middle" fill="#8f8f9c" font-size="13" font-family="sans-serif">in-board cluster (columns touch vertically)</text>
+  <g transform="translate(480,530) scale(0.30)">
+    <g transform="translate(-105,-60.6)"><use href="#tile-echo"/></g>
+    <g transform="translate(-105,60.6)"><use href="#tile-harmony"/></g>
+    <g transform="translate(0,-121.2)"><use href="#tile-rhythm"/></g>
+    <g transform="translate(0,0)"><use href="#tile-key"/></g>
+    <g transform="translate(0,121.2)"><use href="#tile-discord"/></g>
+    <g transform="translate(105,-60.6)"><use href="#tile-discord"/></g>
+    <g transform="translate(105,60.6)"><use href="#tile-rhythm"/></g>
+  </g>
+</svg>

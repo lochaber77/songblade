@@ -1,0 +1,15 @@
+{
+  "cols": 7,
+  "rows": 7,
+  "R": 38,
+  "dmgTarget": 3,
+  "dmgSpawnChance": 0.08,
+  "dmgTable": [[2, 0.70], [4, 0.25], [7, 0.05]],
+  "clockStart": 180,
+  "skipPerSpill": 1.5,
+  "discardFeed": 3,
+  "enrageHit": 10,
+  "enrageEvery": 8,
+  "playerHp": 50,
+  "handSize": 4
+}
