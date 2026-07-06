@@ -1,9 +1,11 @@
 # Songblade — Battle Prototype
 
-A fully local, no-engine prototype of the battle system. Nothing leaves your
-machine.
+A no-engine prototype of the battle system.
 
-## Run it
+**Play it live: https://lochaber77.github.io/songblade/** (works on phones —
+pushes to `main` redeploy it automatically in a minute or two).
+
+## Run it locally
 
 From this folder, either:
 
