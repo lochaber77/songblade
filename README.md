@@ -21,8 +21,9 @@ from file:// — it only serves files to your own browser.)
 
 ## Play it
 
-- **Drag** across adjacent hexes to draw a **straight line** (no bends). It
-  must **start and end on the same colour**. Drag backwards to undo steps.
+- **Press a tile and drag at any angle** — the line is a straight
+  centre-to-centre segment that must **start and end on the same colour**,
+  and it consumes **every hex it passes through**.
 - Only tiles of the line's **bookend colour** generate energy — each charges
   every card in your hand that needs that colour.
 - Every **other** coloured tile in the line winds the enemy's cards down

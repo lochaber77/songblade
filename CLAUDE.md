@@ -8,9 +8,11 @@ rebuilt in Godot later. Optimize for iteration speed, not architecture.
 
 ## The game in one paragraph
 Real-time battles on a flat-top hex board (columns touch vertically; gravity
-pulls straight down columns). The player drags STRAIGHT lines (no bends —
-direction is fixed after the second tile) that must start AND end on the same
-colour. Only tiles of the bookend colour generate energy — each one charges
+pulls straight down columns). The player draws OMNIDIRECTIONAL straight
+lines: press a tile, drag at any angle, release on a tile of the SAME colour.
+The segment runs centre-to-centre and the line consumes every hex it passes
+through (so any same-colour pair is connectable; what lies between is the
+cost). Only tiles of the bookend colour generate energy — each one charges
 every card in hand that needs that colour (excess to full cards is lost).
 EVERY other energy tile in the line spills: it winds the enemy's cards down
 (tuning.windPerSpill units, 3), and each resolved line winds them a flat

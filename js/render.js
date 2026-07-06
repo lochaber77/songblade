@@ -81,13 +81,11 @@ function draw() {
     }
     if (sel) { hexPath(x, y, R() - 2); cx.fillStyle = "rgba(255,255,255,.18)"; cx.fill(); }
   }
-  if (S.line.length > 1) {
+  if (S.drag && S.origin && S.dragEnd) {
     cx.beginPath(); cx.lineWidth = 6; cx.strokeStyle = "rgba(255,255,255,.85)";
-    cx.lineCap = "round"; cx.lineJoin = "round";
-    S.line.forEach((t, i) => {
-      const x = px(t.q), y = py(t.q, t.r);
-      i ? cx.lineTo(x, y) : cx.moveTo(x, y);
-    });
+    cx.lineCap = "round";
+    cx.moveTo(px(S.origin.q), py(S.origin.q, S.origin.r));
+    cx.lineTo(S.dragEnd[0], S.dragEnd[1]);
     cx.stroke();
   }
   if (flash) { cx.fillStyle = flash + "22"; cx.fillRect(0, 0, cv.width, cv.height); flash = null; }

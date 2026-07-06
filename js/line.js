@@ -1,8 +1,30 @@
 // Line drawing input + resolution. This file IS the core loop.
+// Lines are omnidirectional: press a tile, drag at ANY angle, release on a
+// same-colour tile. The segment runs centre-to-centre and the line consumes
+// every hex the segment passes through.
 import { S, DATA } from "./state.js";
-import { neighbors, gravity, px, py, R } from "./board.js";
+import { gravity, px, py, R } from "./board.js";
 import { dmgEnemy, windEnemy, checkEnd } from "./combat.js";
 import { log, renderHand, renderEnemy, CNAMES } from "./render.js";
+
+// All hexes the straight segment (x0,y0)→(x1,y1) passes through, in order.
+// Hex centres form a Voronoi partition of the plane, so dense sampling with
+// nearest-centre classification matches true hex containment.
+export function tilesOnSegment(x0, y0, x1, y1) {
+  const out = [];
+  const steps = Math.max(1, Math.ceil(Math.hypot(x1 - x0, y1 - y0) / (R() / 6)));
+  for (let i = 0; i <= steps; i++) {
+    const x = x0 + (x1 - x0) * i / steps, y = y0 + (y1 - y0) * i / steps;
+    let best = null, bd = R() * R() * 1.05; // a hex point is at most R from centre
+    for (const t of S.tiles) {
+      const dx = x - px(t.q), dy = y - py(t.q, t.r);
+      const d = dx * dx + dy * dy;
+      if (d < bd) { bd = d; best = t; }
+    }
+    if (best && !out.includes(best)) out.push(best);
+  }
+  return out;
+}
 
 export function setupInput(cv) {
   const pos = e => {
@@ -16,41 +38,38 @@ export function setupInput(cv) {
     return dx * dx + dy * dy < R() * R() * 0.85;
   });
 
+  // Recompute the previewed path: snap the free end to the hovered tile's
+  // centre (that is what resolution will use), else follow the pointer.
+  const preview = (x, y) => {
+    const t = hit(x, y);
+    S.term = t || null;
+    const ex = t ? px(t.q) : x, ey = t ? py(t.q, t.r) : y;
+    S.dragEnd = [ex, ey];
+    S.line = tilesOnSegment(px(S.origin.q), py(S.origin.q, S.origin.r), ex, ey);
+  };
+
   const down = e => {
     e.preventDefault();
     if (S.over) return;
     const t = hit(...pos(e));
-    if (t && !t.dmg) { S.drag = true; S.line = [t]; } // lines start on energy tiles only
+    if (t && !t.dmg) { // lines start on energy tiles only
+      S.drag = true; S.origin = t; S.term = t;
+      S.line = [t]; S.dragEnd = [px(t.q), py(t.q, t.r)];
+    }
   };
   const move = e => {
     if (!S.drag) return;
     e.preventDefault();
-    const t = hit(...pos(e));
-    if (!t) return;
-    const L = S.line;
-    if (t === L[L.length - 1]) return;
-    if (L.length > 1 && t === L[L.length - 2]) { L.pop(); return; } // backtrack
-    if (L.includes(t)) return;                                      // no revisits
-    if (!neighbors(L[L.length - 1]).includes(t)) return;
-    if (L.length > 1) {
-      // straight lines only: the next step must continue the line's direction
-      const a = L[L.length - 2], b = L[L.length - 1];
-      const ex = 2 * px(b.q) - px(a.q), ey = 2 * py(b.q, b.r) - py(a.q, a.r);
-      const dx = px(t.q) - ex, dy = py(t.q, t.r) - ey;
-      if (dx * dx + dy * dy > R() * R() * 0.25) return;
-    }
-    L.push(t);
+    preview(...pos(e));
   };
   const up = () => {
     if (!S.drag) return;
     S.drag = false;
-    const L = S.line, energy = L.filter(t => !t.dmg);
-    const ok = L.length >= 2 && energy.length >= 2
-      && !L[0].dmg && !L[L.length - 1].dmg          // bookends are energy tiles
-      && L[0].c === L[L.length - 1].c;              // same-colour bookend rule
+    const o = S.origin, t = S.term;
+    const ok = t && !t.dmg && t !== o && t.c === o.c; // energy bookends, same colour
     if (ok) resolveLine();
-    else if (L.length > 1) log("Invalid line — must start and end on the same colour.");
-    S.line = [];
+    else if (S.line.length > 1) log("Invalid line — must start and end on the same colour.");
+    S.line = []; S.origin = null; S.term = null; S.dragEnd = null;
   };
 
   cv.addEventListener("mousedown", down);
@@ -72,7 +91,7 @@ function resolveLine() {
 
   // Only tiles of the bookend colour generate energy: each one charges EVERY
   // card in hand that still needs that colour (charged-but-full = lost).
-  // Every OTHER energy tile spills — it winds the enemy's card timers down.
+  // Every OTHER energy tile spills — it winds the enemy's cards down.
   let spill = 0;
   for (const t of energy) {
     if (t.c !== start.c) { spill++; continue; }

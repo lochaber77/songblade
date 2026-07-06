@@ -21,5 +21,6 @@ export function resetState() {
     clock: T.clockStart,
     enraged: false, enrageT: 0,
     drag: false, over: false,
+    origin: null, term: null, dragEnd: null,
   });
 }
