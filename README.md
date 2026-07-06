@@ -23,10 +23,11 @@ from file:// — it only serves files to your own browser.)
 
 - **Drag** across adjacent hexes to draw a **straight line** (no bends). It
   must **start and end on the same colour**. Drag backwards to undo steps.
-- Matched colours charge **every** card in your hand that needs them; the
-  **starting colour** gets a scaling bonus (+1 per extra start-colour tile).
-- Colours **no card in your hand uses** feed the enemy's energy **and skip
-  the clock forward**. Watch the enemy's card bars fill.
+- Only tiles of the line's **bookend colour** generate energy — each charges
+  every card in your hand that needs that colour.
+- Every **other** coloured tile in the line winds the enemy's card timers
+  down 0.5s, and each line you make winds them 0.5s on its own. When a
+  timer hits zero the enemy card **fires** and resets. Watch the bars drain.
 - Grey **⚔ tiles** are damage hexes: sweep them mid-line for free damage.
   They can't start or end a line and never feed the enemy.
 - **✕** on a card discards it (feeds the enemy). Glowing cards are ready —

@@ -3,9 +3,9 @@
     "name": "Gnashing Chorister",
     "hp": 60,
     "cards": [
-      { "nm": "Claw",   "cost": 10, "fx": "7 damage",
+      { "nm": "Claw",   "timer": 6,  "fx": "7 damage",
         "effects": [{"type": "attack", "n": 7}] },
-      { "nm": "Bellow", "cost": 18, "fx": "11 dmg, steals 12s",
+      { "nm": "Bellow", "timer": 10, "fx": "11 dmg, steals 12s",
         "effects": [{"type": "attack", "n": 11}, {"type": "steal_time", "n": 12}] }
     ]
   }

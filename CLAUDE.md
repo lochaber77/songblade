@@ -10,12 +10,14 @@ rebuilt in Godot later. Optimize for iteration speed, not architecture.
 Real-time battles on a flat-top hex board (columns touch vertically; gravity
 pulls straight down columns). The player drags STRAIGHT lines (no bends —
 direction is fixed after the second tile) that must start AND end on the same
-colour. Matched tiles broadcast-charge every card in
-hand that needs that colour; the starting colour earns a scaling bonus (+1 per
-start-colour tile beyond the first); colours no card in hand uses spill to the
-ENEMY's energy, which charges the enemy's visible cards. Excess to full cards
-is lost. A real-time clock counts down; spillover skips it forward; at zero
-the enemy ENRAGES. Grey ⚔ damage hexes are pass-through tiles (can't start or
+colour. Only tiles of the bookend colour generate energy — each one charges
+every card in hand that needs that colour (excess to full cards is lost).
+EVERY other energy tile in the line spills: it winds the enemy's card timers
+down (tuning.timerPerSpill, 0.5s each), and each resolved line winds them a
+flat tuning.timerPerMove (0.5s) on its own. Enemy cards each carry a timer
+(3–10s, set per card in enemies.json); at zero the card fires and its timer
+resets. Timers move ONLY on player actions unless tuning.timersRealtime is
+set. A real-time clock still counts down; at zero the enemy ENRAGES. Grey ⚔ damage hexes are pass-through tiles (can't start or
 end a line, never spill) that deal their value when swept. Discarding a card
 feeds the enemy.
 
@@ -54,6 +56,8 @@ hidden-information masks on enemy cards, a real deck (hand refills from a
 random pool), ambush/initiative, meta-progression.
 
 ## Effect interpreter vocabulary (combat.js)
-Player: damage, heal, block, time, dot{tick,every,times}, feed
+Player: damage, heal, block, time, dot{tick,every,times}, feed (winds enemy
+timers down n seconds)
 Enemy: attack, steal_time
+Enemy cards have `timer` (seconds), not an energy cost.
 Add new types conservatively and document them here.

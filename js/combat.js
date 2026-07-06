@@ -21,23 +21,24 @@ export function heal(n) {
   renderStatus();
 }
 
-export function feedEnemy(n, silent) {
-  if (n <= 0) return;
-  S.een += n;
-  S.clock = Math.max(0, S.clock - DATA.tuning.skipPerSpill * n);
-  if (!silent)
-    log(`Enemy gains ${n} energy — clock skips ${(DATA.tuning.skipPerSpill * n).toFixed(1)}s.`);
-  enemyTryFire();
+// Wind every enemy card's timer down by `sec` seconds. Cards fire at zero
+// and their timer resets (overshoot carries over, so a huge wind can fire
+// a card more than once).
+export function windEnemy(sec, silent) {
+  if (sec <= 0 || S.over) return;
+  for (const ec of S.ecards) ec.t -= sec;
+  if (!silent) log(`Enemy timers wind down ${sec.toFixed(1)}s.`);
+  fireReady();
   renderEnemy();
 }
 
-export function enemyTryFire() {
+export function fireReady() {
   let fired = true;
   while (fired && !S.over) {
     fired = false;
-    for (const ec of [...S.ecards].sort((a, b) => a.cost - b.cost)) {
-      if (S.een >= ec.cost) {
-        S.een -= ec.cost;
+    for (const ec of S.ecards) {
+      if (ec.t <= 0) {
+        ec.t += Math.max(ec.timer, 0.5); // reset; floor guards a 0s timer
         log(`⚔ Enemy plays ${ec.nm}!`);
         applyEffects(ec.effects, true);
         fired = true;
@@ -58,7 +59,7 @@ export function applyEffects(effects, isEnemy) {
       case "time":       S.clock += e.n; log(`+${e.n} seconds!`); break;
       case "dot":        S.dots.push({ tick: e.tick, every: e.every, left: e.times, t: e.every });
                          log("A wail lingers…"); break;
-      case "feed":       feedEnemy(e.n, true); log(`It feeds the enemy ${e.n}.`); break;
+      case "feed":       windEnemy(e.n, true); log(`Enemy timers −${e.n}s!`); break;
       case "attack":     dmgPlayer(e.n); break;
       case "steal_time": S.clock = Math.max(0, S.clock - e.n);
                          log(`It steals ${e.n} seconds!`); break;

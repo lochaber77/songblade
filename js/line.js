@@ -1,7 +1,7 @@
 // Line drawing input + resolution. This file IS the core loop.
-import { S } from "./state.js";
+import { S, DATA } from "./state.js";
 import { neighbors, gravity, px, py, R } from "./board.js";
-import { dmgEnemy, feedEnemy, enemyTryFire, checkEnd } from "./combat.js";
+import { dmgEnemy, windEnemy, checkEnd } from "./combat.js";
 import { log, renderHand, renderEnemy, CNAMES } from "./render.js";
 
 export function setupInput(cv) {
@@ -62,46 +62,41 @@ export function setupInput(cv) {
 }
 
 function resolveLine() {
+  const T = DATA.tuning;
   const line = S.line;
   const energy = line.filter(t => !t.dmg);
-  const start = energy[0];
-  let spill = 0, hexDmg = 0;
+  const start = line[0]; // always an energy tile (bookend rule)
+  let hexDmg = 0;
 
   for (const t of line) if (t.dmg) hexDmg += t.dmg; // damage hexes never spill
 
-  // Broadcast: one tile charges EVERY card in hand that still needs its colour.
-  // Matched-but-full = lost. Colour absent from all costs = spillover.
-  const grant = c => {
-    let any = false, hasColor = false;
-    for (const card of S.hand) {
-      if (card.cost[c] !== undefined) {
-        hasColor = true;
-        if (card.charge[c] < card.cost[c]) { card.charge[c]++; any = true; }
-      }
-    }
-    if (!any && !hasColor) spill++;
-  };
-  for (const t of energy) grant(t.c);
-
-  // Start-colour scaling bonus: +1 per start-colour tile beyond the first.
-  const n = energy.filter(t => t.c === start.c).length;
-  for (let i = 0; i < n - 1; i++)
+  // Only tiles of the bookend colour generate energy: each one charges EVERY
+  // card in hand that still needs that colour (charged-but-full = lost).
+  // Every OTHER energy tile spills — it winds the enemy's card timers down.
+  let spill = 0;
+  for (const t of energy) {
+    if (t.c !== start.c) { spill++; continue; }
     for (const card of S.hand)
       if (card.cost[start.c] !== undefined && card.charge[start.c] < card.cost[start.c])
         card.charge[start.c]++;
-
-  if (hexDmg) {
-    dmgEnemy(hexDmg);
-    log(`Damage hexes strike for ${hexDmg}!` + (spill ? ` Spillover ${spill}.` : ""));
-  } else if (n > 1) {
-    log(`${CNAMES[start.c]} line ×${energy.length} (bonus +${n - 1}).` + (spill ? ` Spillover ${spill}.` : ""));
   }
+  const matched = energy.length - spill;
+
+  // Every resolved line is a "move" — it winds the timers on its own,
+  // plus more per spilled tile.
+  const wind = T.timerPerMove + spill * T.timerPerSpill;
+
+  let msg = `${CNAMES[start.c]} ×${matched}`;
+  if (hexDmg) msg += ` · ⚔ ${hexDmg} damage`;
+  msg += ` · enemy timers −${wind.toFixed(1)}s`;
+  log(msg);
+
+  if (hexDmg) dmgEnemy(hexDmg);
 
   S.tiles = S.tiles.filter(t => !line.includes(t));
   gravity();
 
-  if (spill) feedEnemy(spill, false);
-  else enemyTryFire();
+  windEnemy(wind, true);
 
   renderHand(); renderEnemy(); checkEnd();
 }

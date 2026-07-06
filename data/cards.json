@@ -17,7 +17,7 @@
   { "nm": "Lingering Wail", "cost": {"ech": 6},           "fx": "2 dmg every 2.5s, five times.",
     "effects": [{"type": "dot", "tick": 2, "every": 2.5, "times": 5}] },
 
-  { "nm": "Shatterchord",   "cost": {"dis": 6},           "fx": "Deal 8. Feed the enemy 3.",
+  { "nm": "Shatterchord",   "cost": {"dis": 6},           "fx": "Deal 8. Enemy timers −3s.",
     "effects": [{"type": "damage", "n": 8}, {"type": "feed", "n": 3}] },
 
   { "nm": "Chorus Swell",   "cost": {"har": 4, "rhy": 3}, "fx": "Deal 2 and heal 2.",

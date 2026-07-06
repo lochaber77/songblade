@@ -1,6 +1,6 @@
 // Hand, charging, playing, discarding.
 import { S, DATA } from "./state.js";
-import { applyEffects, feedEnemy, checkEnd } from "./combat.js";
+import { applyEffects, windEnemy, checkEnd } from "./combat.js";
 import { log, renderHand, renderStatus, renderEnemy } from "./render.js";
 
 export function newCard() {
@@ -27,8 +27,8 @@ export function playCard(i) {
 
 export function discard(i) {
   if (S.over) return;
-  log(`Discarded ${S.hand[i].nm} — the enemy feeds (+${DATA.tuning.discardFeed}).`);
+  log(`Discarded ${S.hand[i].nm} — enemy timers wind down ${DATA.tuning.discardFeed}s.`);
   S.hand[i] = newCard();
-  feedEnemy(DATA.tuning.discardFeed, true);
+  windEnemy(DATA.tuning.discardFeed, true);
   renderHand(); renderEnemy();
 }

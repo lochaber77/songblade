@@ -15,9 +15,9 @@ export function resetState() {
   Object.assign(S, {
     tiles: [], hand: [], line: [], dots: [],
     php: T.playerHp, block: 0,
-    ehp: enemy.hp, een: 0,
+    ehp: enemy.hp,
     enemyName: enemy.name,
-    ecards: enemy.cards.map(c => ({ ...c })),
+    ecards: enemy.cards.map(c => ({ ...c, t: c.timer })),
     clock: T.clockStart,
     enraged: false, enrageT: 0,
     drag: false, over: false,
