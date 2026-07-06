@@ -82,13 +82,13 @@ function resolveLine() {
   }
   const matched = energy.length - spill;
 
-  // Every resolved line is a "move" — it winds the timers on its own,
+  // Every resolved line is a "move" — it winds the enemy on its own,
   // plus more per spilled tile.
-  const wind = T.timerPerMove + spill * T.timerPerSpill;
+  const wind = T.windPerMove + spill * T.windPerSpill;
 
   let msg = `${CNAMES[start.c]} ×${matched}`;
   if (hexDmg) msg += ` · ⚔ ${hexDmg} damage`;
-  msg += ` · enemy timers −${wind.toFixed(1)}s`;
+  msg += ` · winds enemy ${wind}`;
   log(msg);
 
   if (hexDmg) dmgEnemy(hexDmg);

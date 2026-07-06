@@ -4,10 +4,9 @@ import { DATA } from "./state.js";
 
 const FIELDS = [
   ["clockStart",    "Clock (s)*"],
-  ["timerPerMove",  "Wind / move (s)"],
-  ["timerPerSpill", "Wind / off-colour (s)"],
-  ["timersRealtime","Realtime timers (0/1)"],
-  ["discardFeed",   "Discard wind (s)"],
+  ["windPerMove",   "Wind / move"],
+  ["windPerSpill",  "Wind / off-colour"],
+  ["discardWind",   "Discard wind"],
   ["dmgTarget",     "Damage hexes"],
   ["dmgSpawnChance","Hex spawn chance"],
   ["enrageHit",     "Enrage hit"],

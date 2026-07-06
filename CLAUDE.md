@@ -12,12 +12,13 @@ pulls straight down columns). The player drags STRAIGHT lines (no bends —
 direction is fixed after the second tile) that must start AND end on the same
 colour. Only tiles of the bookend colour generate energy — each one charges
 every card in hand that needs that colour (excess to full cards is lost).
-EVERY other energy tile in the line spills: it winds the enemy's card timers
-down (tuning.timerPerSpill, 0.5s each), and each resolved line winds them a
-flat tuning.timerPerMove (0.5s) on its own. Enemy cards each carry a timer
-(3–10s, set per card in enemies.json); at zero the card fires and its timer
-resets. Timers move ONLY on player actions unless tuning.timersRealtime is
-set. A real-time clock still counts down; at zero the enemy ENRAGES. Grey ⚔ damage hexes are pass-through tiles (can't start or
+EVERY other energy tile in the line spills: it winds the enemy's cards down
+(tuning.windPerSpill units, 3), and each resolved line winds them a flat
+tuning.windPerMove (10) on its own. Enemy cards each carry a wind total
+(units, per card in enemies.json — sized so roughly 10 enemy cards fire per
+fight); at zero the card fires and its wind resets. Wind moves ONLY on
+player actions, never in real time. A real-time clock still counts down; at
+zero the enemy ENRAGES. Grey ⚔ damage hexes are pass-through tiles (can't start or
 end a line, never spill) that deal their value when swept. Discarding a card
 feeds the enemy.
 
@@ -56,8 +57,8 @@ hidden-information masks on enemy cards, a real deck (hand refills from a
 random pool), ambush/initiative, meta-progression.
 
 ## Effect interpreter vocabulary (combat.js)
-Player: damage, heal, block, time, dot{tick,every,times}, feed (winds enemy
-timers down n seconds)
+Player: damage, heal, block, time, dot{tick,every,times}, feed (winds the
+enemy n units)
 Enemy: attack, steal_time
-Enemy cards have `timer` (seconds), not an energy cost.
+Enemy cards have `wind` (units to fire), not an energy cost.
 Add new types conservatively and document them here.

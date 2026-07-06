@@ -27,8 +27,8 @@ export function playCard(i) {
 
 export function discard(i) {
   if (S.over) return;
-  log(`Discarded ${S.hand[i].nm} — enemy timers wind down ${DATA.tuning.discardFeed}s.`);
+  log(`Discarded ${S.hand[i].nm} — winds the enemy ${DATA.tuning.discardWind}.`);
   S.hand[i] = newCard();
-  windEnemy(DATA.tuning.discardFeed, true);
+  windEnemy(DATA.tuning.discardWind, true);
   renderHand(); renderEnemy();
 }

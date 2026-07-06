@@ -120,13 +120,13 @@ export function renderEnemy() {
   $("ehpTxt").textContent = S.ehp + " / " + DATA.enemies[0].hp;
   const box = $("ecards"); box.innerHTML = "";
   for (const ec of S.ecards) {
-    const left = Math.max(0, ec.t);
-    const pct = Math.min(100, 100 * left / ec.timer);
+    const left = Math.max(0, Math.ceil(ec.t));
+    const pct = Math.min(100, 100 * left / ec.wind);
     const d = document.createElement("div");
-    d.className = "ecard" + (left <= 1.5 ? " ready" : "");
+    d.className = "ecard" + (left <= DATA.tuning.windPerMove ? " ready" : "");
     d.innerHTML = `<b>${ec.nm}</b> — ${ec.fx}
       <div class="barWrap"><div class="bar" style="width:${pct}%"></div></div>
-      <span style="color:#8f8f9c">fires in ${left.toFixed(1)}s</span>`;
+      <span style="color:#8f8f9c">fires in ${left} wind</span>`;
     box.appendChild(d);
   }
 }
@@ -142,7 +142,7 @@ export function renderClock() {
   const m = Math.floor(S.clock / 60), s = Math.floor(S.clock % 60);
   c.textContent = m + ":" + String(s).padStart(2, "0");
   c.className = S.clock < 30 ? "low" : "";
-  $("clockNote").textContent = `off-colour tiles wind the enemy · −${DATA.tuning.timerPerSpill}s each`;
+  $("clockNote").textContent = `each move winds the enemy ${DATA.tuning.windPerMove} · off-colour tiles ${DATA.tuning.windPerSpill} each`;
 }
 
 export const log = m => { $("log").textContent = m; };

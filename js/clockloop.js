@@ -1,10 +1,9 @@
 // Real-time systems: the clock, DoT ticks, enrage.
 import { S, DATA } from "./state.js";
-import { dmgEnemy, dmgPlayer, checkEnd, fireReady } from "./combat.js";
-import { log, renderClock, renderEnemy, showEnrage } from "./render.js";
+import { dmgEnemy, dmgPlayer, checkEnd } from "./combat.js";
+import { log, renderClock, showEnrage } from "./render.js";
 
 let last = performance.now();
-let enemyRenderAcc = 0;
 
 export function startClock() {
   requestAnimationFrame(tick);
@@ -25,15 +24,6 @@ function tick(now) {
       }
     }
     S.dots = S.dots.filter(d => d.left > 0);
-
-    // Optional mode (tuning.timersRealtime): enemy card timers also tick
-    // with the wall clock, not just with player moves.
-    if (DATA.tuning.timersRealtime) {
-      for (const ec of S.ecards) ec.t -= dt;
-      fireReady();
-      enemyRenderAcc += dt;
-      if (enemyRenderAcc > 0.2) { enemyRenderAcc = 0; renderEnemy(); }
-    }
 
     if (S.clock <= 0 && !S.enraged) {
       S.enraged = true;

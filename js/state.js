@@ -17,7 +17,7 @@ export function resetState() {
     php: T.playerHp, block: 0,
     ehp: enemy.hp,
     enemyName: enemy.name,
-    ecards: enemy.cards.map(c => ({ ...c, t: c.timer })),
+    ecards: enemy.cards.map(c => ({ ...c, t: c.wind })),
     clock: T.clockStart,
     enraged: false, enrageT: 0,
     drag: false, over: false,

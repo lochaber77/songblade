@@ -25,9 +25,9 @@ from file:// — it only serves files to your own browser.)
   must **start and end on the same colour**. Drag backwards to undo steps.
 - Only tiles of the line's **bookend colour** generate energy — each charges
   every card in your hand that needs that colour.
-- Every **other** coloured tile in the line winds the enemy's card timers
-  down 0.5s, and each line you make winds them 0.5s on its own. When a
-  timer hits zero the enemy card **fires** and resets. Watch the bars drain.
+- Every **other** coloured tile in the line winds the enemy's cards down
+  **3**, and each line you make winds them **10** on its own. When a card's
+  wind runs out it **fires** and resets. Watch the bars drain.
 - Grey **⚔ tiles** are damage hexes: sweep them mid-line for free damage.
   They can't start or end a line and never feed the enemy.
 - **✕** on a card discards it (feeds the enemy). Glowing cards are ready —
