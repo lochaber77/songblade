@@ -6,6 +6,7 @@ import { setupInput } from "./line.js";
 import { initRender, renderHand, renderEnemy, renderStatus, renderClock, hideOverlay, log } from "./render.js";
 import { startClock } from "./clockloop.js";
 import { initDebug } from "./debug.js";
+import { initAudio } from "./audio.js";
 
 function initFight() {
   resetState();
@@ -21,6 +22,7 @@ async function boot() {
   const canvas = document.getElementById("board");
   initRender(canvas);
   setupInput(canvas);
+  initAudio();
   initDebug(initFight);
   document.getElementById("restartBtn").onclick = initFight;
   initFight();

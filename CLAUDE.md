@@ -48,6 +48,7 @@ When code and docs disagree, ask the user; the docs usually win.
    - js/combat.js — damage/heal/block/feed + declarative effect interpreter
    - js/clockloop.js — real-time clock, DoTs, enrage
    - js/render.js — all canvas + DOM rendering
+   - js/audio.js  — Web Audio blips (no asset files; line-draw scale notes)
    - js/debug.js  — live tuning panel
    - js/main.js   — boot wiring
 5. Run with any static server (`npx serve` or `python3 -m http.server`);

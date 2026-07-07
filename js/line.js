@@ -6,6 +6,7 @@ import { S, DATA } from "./state.js";
 import { gravity, px, py, R } from "./board.js";
 import { dmgEnemy, windEnemy, checkEnd } from "./combat.js";
 import { log, renderHand, renderEnemy, CNAMES } from "./render.js";
+import { lineNote } from "./audio.js";
 
 // All hexes the straight segment (x0,y0)→(x1,y1) passes through, in order.
 // Hex centres form a Voronoi partition of the plane, so dense sampling with
@@ -40,12 +41,17 @@ export function setupInput(cv) {
 
   // Recompute the previewed path: snap the free end to the hovered tile's
   // centre (that is what resolution will use), else follow the pointer.
+  let sung = 0; // how many energy tiles the current drag has played notes for
   const preview = (x, y) => {
     const t = hit(x, y);
     S.term = t || null;
     const ex = t ? px(t.q) : x, ey = t ? py(t.q, t.r) : y;
     S.dragEnd = [ex, ey];
     S.line = tilesOnSegment(px(S.origin.q), py(S.origin.q, S.origin.r), ex, ey);
+    // the line sings: one rising scale step per energy tile it gains
+    const n = S.line.filter(o => !o.dmg).length;
+    for (let i = sung + 1; i <= n; i++) lineNote(i, (i - sung - 1) * 0.05);
+    sung = n;
   };
 
   const down = e => {
@@ -55,6 +61,7 @@ export function setupInput(cv) {
     if (t && !t.dmg) { // lines start on energy tiles only
       S.drag = true; S.origin = t; S.term = t;
       S.line = [t]; S.dragEnd = [px(t.q), py(t.q, t.r)];
+      sung = 1; lineNote(1);
     }
   };
   const move = e => {
